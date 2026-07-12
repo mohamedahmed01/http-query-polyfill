@@ -7,6 +7,12 @@ on:
       - master
   pull_request:
 
+# Composer 2.9+ blocks advisory-affected packages during resolution.
+# Laravel 11.x (through at least v11.54) is flagged with no patched release,
+# so advisory blocking must be disabled for the L11 matrix legs.
+env:
+  COMPOSER_NO_SECURITY_BLOCKING: "1"
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -61,13 +67,16 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer config policy.advisories.block false
           composer require \
             "illuminate/http:${{ matrix.laravel }}" \
             "illuminate/support:${{ matrix.laravel }}" \
+            --no-interaction --no-update
+          composer require \
             "orchestra/testbench:${{ matrix.testbench }}" \
             "phpunit/phpunit:${{ matrix.phpunit }}" \
-            --no-interaction --no-update
-          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+            --dev --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
       - name: Run tests
         run: vendor/bin/phpunit --colors=always
