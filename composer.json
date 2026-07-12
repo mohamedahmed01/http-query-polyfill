@@ -1,0 +1,52 @@
+{
+    "name": "mohamedahmed01/laravel-http-query-polyfill",
+    "description": "Backward-compatible polyfill for Laravel's Http::query() method (RFC 10008) on Laravel < 13.19",
+    "keywords": [
+        "laravel",
+        "http",
+        "query",
+        "polyfill",
+        "rfc-10008"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohamed Ahmed",
+            "email": "mohamedabdelmenem01@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/http": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
+        "phpunit/phpunit": "^10.0|^11.0|^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MohamedAhmed01\\HttpQueryPolyfill\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MohamedAhmed01\\HttpQueryPolyfill\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MohamedAhmed01\\HttpQueryPolyfill\\HttpQueryServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
