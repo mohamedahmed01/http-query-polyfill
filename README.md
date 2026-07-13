@@ -63,6 +63,26 @@ Do **not** use this trait on Laravel 13.19+ — the methods already exist and wi
 | 10.x – 13.18 | Macro polyfill registered |
 | 13.19+ | No-op; native `Http::query()` used |
 
+## Live integration (optional)
+
+Against [Ayder](https://github.com/A1darbek/ayder)'s `/broker/query` QUERY endpoint:
+
+```bash
+# from an Ayder checkout
+docker compose up -d --build
+curl -fsS http://127.0.0.1:1109/health
+
+# from this package
+vendor/bin/phpunit --filter AyderHttpQueryIntegrationTest
+```
+
+Coverage includes:
+- `Http::query()` with a JSON body against a real QUERY server
+- `Accept-Query`, `ETag`, `Content-Location`
+- conditional revalidation with `If-None-Match` → `304`
+
+Tests skip automatically when Ayder is not reachable. Override with `AYDER_BASE_URL` / `AYDER_TOKEN`.
+
 ## License
 
 MIT
